@@ -53,6 +53,7 @@ class App extends Component {
         const allFriends = await axios.get('http://localhost:3000/data');
     
         console.log('entered into the allFriends await call')
+        this.setState({contacts: []})
         const {contacts} = this.state
 
         allFriends.data.map(friend => {
@@ -63,6 +64,7 @@ class App extends Component {
             }
             contacts.push(newFriend)
         })
+        
         this.setState({contacts: contacts})
         console.log(this.state)
     } catch (error) {
