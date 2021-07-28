@@ -13,10 +13,12 @@ mongoose.connect(mongoURI, {
 const Schema = mongoose.Schema;
 
 const charitySchema = new Schema({
-    _id: {type: mongoose.Types.ObjectId},
-    website_url: {type: String, required: true, unique: true},
-    website_name: {type: String, required: true}
+    name: {type: String, required: true, unique: true},
 })
+//_id: {type: mongoose.Types.ObjectId},
+//unique: true
+// _id: {type: mongoose.Types.ObjectId},
+// website_name: {type: String, required: true}
 
 const Charity = mongoose.model('charity', charitySchema);
 

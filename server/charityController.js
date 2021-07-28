@@ -20,4 +20,19 @@ charityController.getAllUsers = (req, res, next) => {
   });
 };
 
+charityController.postNewFriend = async (req, res, next) => {
+  
+  try {
+    console.log('We have entered charity controller post new friend')
+    console.log(req.body)
+    await models.Charity.create(req.body)
+    return next()
+  } catch (error) {
+    console.log('there was an error creating the user')
+    return next(error)
+  }
+
+  
+};
+
 module.exports = charityController;
