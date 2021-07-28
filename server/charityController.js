@@ -11,8 +11,8 @@ charityController.getAllUsers = (req, res, next) => {
     // if a database error occurs, call next with the error message passed in
     // for the express global error handler to catch
     if (err) return next(err);
-    console.log('Finding users...')
-    console.log(users)
+    // console.log('Finding users...')
+    // console.log(users)
     // store retrieved users into res.locals and move on to next middleware
     res.locals.users =  users;
     // console.log(res.locals)

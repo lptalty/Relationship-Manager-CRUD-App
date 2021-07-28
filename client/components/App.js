@@ -13,7 +13,9 @@ class App extends Component {
     this.state = {
         friendName: '',
         friendBirthday: '',
-        friendFavoriteColor: ''
+        friendFavoriteColor: '',
+        isLoading: true,
+        contacts: []
     }
   }
   
@@ -44,8 +46,40 @@ class App extends Component {
     })
   }
 
+  handleSeeAllFriends = async (event) => {
+    // alert('A name was submitted: ' + this.state.value);
+    //change this to have it go to the right schema
+    event.preventDefault();
+    try {
+        const allFriends = await axios.get('http://localhost:3000/data');
+        // console.log(allFriends.data)
+        console.log('entered into the allFriends await call')
+        // console.log(this.state)
+        const {contacts} = this.state
+        allFriends.data.map(friend => {
+
+            // console.log(friend.friendName)
+            // console.log(friend.friendBirthday)
+            // console.log(friend.friendFavoriteColor)
+            let newFriend = {
+                friendName: `${friend.friendName}`,
+                friendBirthday: `${friend.friendBirthday}`,
+                friendFavoriteColor: `${friend.friendFavoriteColor}`,
+            }
+            contacts.push(newFriend)
+        })
+        this.setState({contacts: contacts})
+        console.log(this.state)
+        // const final = allFriends.json()
+        // console.log(final)
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
   render() {
     const {friendName, friendBirthday, friendFavoriteColor} = this.state
+    const {isLoading} = this.state;
     return (
             <div>
                 <form onSubmit ={this.handleSubmit}>
@@ -69,6 +103,14 @@ class App extends Component {
                     </div>
                     <button type ='submit'>Submit</button>
                 </form>
+                <form onSubmit ={this.handleSeeAllFriends}>
+                    <button type ='submit'>See All Friends</button>
+                </form>
+                <div className={`content ${isLoading ? 'is-loading' : ''}`}>
+                    <div className='loader'></div>
+                    <div className='icon'></div>
+
+                </div>
             </div>
         );
     }
