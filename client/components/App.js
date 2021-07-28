@@ -10,26 +10,30 @@ import regeneratorRuntime from "regenerator-runtime";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+        friendName: '',
+        friendBirthday: '',
+        friendFavoriteColor: ''
+    }
   }
   
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  changeHandler = (event) => {
+    this.setState({[event.target.name]: event.target.value});
   }
 
-  async handleSubmit(event) {
+  //async
+   handleSubmit = async (event) => {
     // alert('A name was submitted: ' + this.state.value);
     //change this to have it go to the right schema
     event.preventDefault();
-    console.log(this.state.value)
+    console.log(this.state)
     await axios({
         method: 'post',
         url: 'http://localhost:3000/newFriend',
         data: {
-            name: this.state.value
+            friendName: this.state.friendName,
+            friendBirthday: this.state.friendBirthday,
+            friendFavoriteColor: this.state.friendFavoriteColor
         }
     })
     .then(function (message) {
@@ -38,20 +42,34 @@ class App extends Component {
     .catch(function (err) {
         console.log(err)
     })
-
-    
   }
 
   render() {
-    
+    const {friendName, friendBirthday, friendFavoriteColor} = this.state
     return (
-            <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+            <div>
+                <form onSubmit ={this.handleSubmit}>
+                    <div>
+                        <input type="text" 
+                        name="friendName" 
+                        value={friendName} 
+                        onChange={this.changeHandler}/>
+                    </div>
+                    <div>
+                        <input type="text" 
+                        name="friendBirthday" 
+                        value={friendBirthday}
+                        onChange={this.changeHandler} />
+                    </div>
+                    <div>
+                        <input type="text" 
+                        name="friendFavoriteColor" 
+                        value={friendFavoriteColor}
+                        onChange={this.changeHandler}/>
+                    </div>
+                    <button type ='submit'>Submit</button>
+                </form>
+            </div>
         );
     }
 }

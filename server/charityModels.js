@@ -13,7 +13,9 @@ mongoose.connect(mongoURI, {
 const Schema = mongoose.Schema;
 
 const charitySchema = new Schema({
-    name: {type: String, required: true, unique: true},
+    friendName: {type: String, required: true, unique: true},
+    friendBirthday: {type: String, required: false, unique: true},
+    friendFavoriteColor: {type: String, required: false}
 })
 //_id: {type: mongoose.Types.ObjectId},
 //unique: true
