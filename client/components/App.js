@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Row from './Row';
-import GameList from './GameList';
-import Leaders from './Leaders';
+// import Row from './Row';
+// import GameList from './GameList';
+import Friend from './Friend';
 import axios from 'axios';
 import regeneratorRuntime from "regenerator-runtime";
 
@@ -14,7 +14,6 @@ class App extends Component {
         friendName: '',
         friendBirthday: '',
         friendFavoriteColor: '',
-        isLoading: true,
         contacts: []
     }
   }
@@ -23,7 +22,7 @@ class App extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  //async
+
    handleSubmit = async (event) => {
     // alert('A name was submitted: ' + this.state.value);
     //change this to have it go to the right schema
@@ -52,15 +51,11 @@ class App extends Component {
     event.preventDefault();
     try {
         const allFriends = await axios.get('http://localhost:3000/data');
-        // console.log(allFriends.data)
+    
         console.log('entered into the allFriends await call')
-        // console.log(this.state)
         const {contacts} = this.state
-        allFriends.data.map(friend => {
 
-            // console.log(friend.friendName)
-            // console.log(friend.friendBirthday)
-            // console.log(friend.friendFavoriteColor)
+        allFriends.data.map(friend => {
             let newFriend = {
                 friendName: `${friend.friendName}`,
                 friendBirthday: `${friend.friendBirthday}`,
@@ -70,8 +65,6 @@ class App extends Component {
         })
         this.setState({contacts: contacts})
         console.log(this.state)
-        // const final = allFriends.json()
-        // console.log(final)
     } catch (error) {
         console.log(error)
     }
@@ -79,7 +72,11 @@ class App extends Component {
 
   render() {
     const {friendName, friendBirthday, friendFavoriteColor} = this.state
-    const {isLoading} = this.state;
+    const friendProfiles = []
+
+    for (let i = 0; i < this.state.contacts.length; i++) {
+        friendProfiles.push(<Friend key = {i} friendProfile={this.state.contacts[i]} />)
+    }
     return (
             <div>
                 <form onSubmit ={this.handleSubmit}>
@@ -87,18 +84,21 @@ class App extends Component {
                         <input type="text" 
                         name="friendName" 
                         value={friendName} 
+                        placeholder="Name"
                         onChange={this.changeHandler}/>
                     </div>
                     <div>
                         <input type="text" 
                         name="friendBirthday" 
                         value={friendBirthday}
+                        placeholder="Birthday"
                         onChange={this.changeHandler} />
                     </div>
                     <div>
                         <input type="text" 
                         name="friendFavoriteColor" 
                         value={friendFavoriteColor}
+                        placeholder="Favorite Color"
                         onChange={this.changeHandler}/>
                     </div>
                     <button type ='submit'>Submit</button>
@@ -106,13 +106,23 @@ class App extends Component {
                 <form onSubmit ={this.handleSeeAllFriends}>
                     <button type ='submit'>See All Friends</button>
                 </form>
-                <div className={`content ${isLoading ? 'is-loading' : ''}`}>
-                    <div className='loader'></div>
-                    <div className='icon'></div>
-
+                <div style={styles.container} id="feed">
+                    {friendProfiles}
                 </div>
             </div>
         );
     }
 }
+
+const styles = {
+    container: {
+      border: '1px black solid',
+      width: '50%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '10px',
+    },
+  };
+  
 export default App;
