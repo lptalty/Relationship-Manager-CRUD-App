@@ -3,100 +3,38 @@ import Row from './Row';
 import GameList from './GameList';
 import Leaders from './Leaders';
 
-let gameStore = [];
 
-function getInitialState() {
-  return {
-    rows: [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-    ],
-    turn: 'X',
-    winner: undefined,
-    gameList: gameStore,
-  };
-}
 
-function checkWin(rows) {
-  const combos = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-  ];
-
-  const flattened = rows.reduce((acc, row) => acc.concat(row), []);
-
-  return combos.find(combo => (
-    flattened[combo[0]] !== '' &&
-    flattened[combo[0]] === flattened[combo[1]] &&
-    flattened[combo[1]] === flattened[combo[2]]
-  ));
-}
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.state = getInitialState();
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  handleClick(row, square) {
-    let { turn, winner } = this.state;
-    const { rows } = this.state;
-    const squareInQuestion = rows[row][square];
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
 
-    if (this.state.winner) return;
-    if (squareInQuestion) return;
-
-    rows[row][square] = turn;
-    turn = turn === 'X' ? 'O' : 'X';
-    winner = checkWin(rows);
-
-    this.setState({
-      rows,
-      turn,
-      winner,
-    });
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
   }
 
   render() {
-    const { rows, turn, winner, gameList } = this.state;
-    const handleClick = this.handleClick;
-
-    const rowElements = rows.map((letters, i) => (
-      <Row key={i} row={i} letters={letters} handleClick={handleClick} />
-    ));
-
-    let infoDiv;
-    if (winner) {
-      let winTurn = turn === 'X' ? 'O' : 'X';
-      infoDiv = (
-        <div>
-          <div>Player {winTurn} wins with squares {winner.join(', ')}!</div>
-        </div>
-      );
-    } else {
-      infoDiv = <div>Turn: {turn}</div>;
-    }
-
+    
     return (
-      <div>
-        {infoDiv}
-        <div id="board">
-          {rowElements}
-        </div>
-        <button id="reset" onClick={() => this.setState(getInitialState())}>Reset board</button>
-        <GameList gameList={gameList} />
-        <Leaders />
-      </div>
-    );
-  }
+            <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+        );
+    }
 }
-
 export default App;
