@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-// const mongoURI = 'mongodb+srv://Liam:personalproject@cluster0.vqipd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const mongoURI = 'mongodb+srv://Liam:personalproject@cluster0.vqipd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
-// mongoose.connect(mongoURI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-// .then(() => {console.log('MongoDB Connected')})
-// .catch(err => console.log(err))
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => {console.log('MongoDB Connected')})
+.catch(err => console.log(err))
 
 
 const Schema = mongoose.Schema;
