@@ -16,7 +16,8 @@ class App extends Component {
         friendFavoriteColor: '',
         friendFavoriteFood: '',
         friendCurrentCity: '',
-        findFriendName: '',
+        findFriendKey: '',
+        findFriendValue: '',
         contacts: []
     }
   }
@@ -113,12 +114,14 @@ class App extends Component {
     console.log('handleSeeAllFriends accessed')
     event.preventDefault();
     try {
-        console.log(this.state.findFriendName)
+        console.log(this.state.findFriendKey)
+        console.log(this.state.findFriendValue)
         const foundFriend = await axios({
             method: 'post',
             url: 'http://localhost:3000/findFriend',
             data: {
-                friendName : this.state.findFriendName
+                key : this.state.findFriendKey,
+                value: this.state.findFriendValue
             }
         })
         
@@ -147,7 +150,7 @@ class App extends Component {
   }
 
   render() {
-    const {friendName, friendBirthday, friendFavoriteColor, friendFavoriteFood, friendCurrentCity, findFriendName} = this.state
+    const {friendName, friendBirthday, friendFavoriteColor, friendFavoriteFood, friendCurrentCity, findFriendKey, findFriendValue} = this.state
     const friendProfiles = []
 
     for (let i = 0; i < this.state.contacts.length; i++) {
@@ -202,9 +205,16 @@ class App extends Component {
                     </form>
                     <div>
                         <input type="text" 
-                        name="findFriendName" 
-                        value={findFriendName}
-                        placeholder="By Name"
+                        name="findFriendKey" 
+                        value={findFriendKey}
+                        placeholder="Category to search"
+                        onChange={this.changeHandler}/>
+                    </div>
+                    <div>
+                        <input type="text" 
+                        name="findFriendValue" 
+                        value={findFriendValue}
+                        placeholder="Value to search"
                         onChange={this.changeHandler}/>
                     </div>
                 

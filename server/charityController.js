@@ -49,14 +49,25 @@ charityController.findFriend = async (req, res, next) => {
   
   try {
     console.log('We have entered charity controller findFriend')
-    console.log(req.body)
-    await models.Charity.find(req.body, (err, users) =>{
+    // console.log(req.body)
+    const key = 'friend' + req.body.key
+    const value = req.body.value
+
+    const search = {
+      [key]: value
+    }
+
+    console.log('searching for')
+    console.log(search)
+    await models.Charity.find(search, (err, users) =>{
       if(err) return next(err)
       res.locals.users = users;
+      console.log('users equals')
+      console.log(users)
       return next()
     })
   } catch (error) {
-    console.log('there was an error deleting the user')
+    console.log('there was an error finding the user')
     return next(error)
   }
 };
