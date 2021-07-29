@@ -14,8 +14,10 @@ const Schema = mongoose.Schema;
 
 const charitySchema = new Schema({
     friendName: {type: String, required: true, unique: true},
-    friendBirthday: {type: String, required: false, unique: true},
-    friendFavoriteColor: {type: String, required: false}
+    friendBirthday: {type: String, required: false, unique: false},
+    friendFavoriteColor: {type: String, required: false},
+    friendFavoriteFood: {type: String, required: false},
+    friendCurrentCity: {type: String, required: false}
 })
 //_id: {type: mongoose.Types.ObjectId},
 //unique: true

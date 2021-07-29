@@ -14,6 +14,8 @@ class App extends Component {
         friendName: '',
         friendBirthday: '',
         friendFavoriteColor: '',
+        friendFavoriteFood: '',
+        friendCurrentCity: '',
         contacts: []
     }
   }
@@ -28,21 +30,22 @@ class App extends Component {
     //change this to have it go to the right schema
     event.preventDefault();
     console.log(this.state)
-    await axios({
-        method: 'post',
-        url: 'http://localhost:3000/newFriend',
-        data: {
-            friendName: this.state.friendName,
-            friendBirthday: this.state.friendBirthday,
-            friendFavoriteColor: this.state.friendFavoriteColor
-        }
-    })
-    .then(function (message) {
-        console.log(message)
-    })
-    .catch(function (err) {
-        console.log(err)
-    })
+    try {
+        console.log('attempting to post with axios')
+        await axios({
+            method: 'post',
+            url: 'http://localhost:3000/newFriend',
+            data: {
+                friendName: this.state.friendName,
+                friendBirthday: this.state.friendBirthday,
+                friendFavoriteColor: this.state.friendFavoriteColor,
+                friendFavoriteFood: this.state.friendFavoriteFood,
+                friendCurrentCity: this.state.friendCurrentCity
+            }
+        })    
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   handleSeeAllFriends = async (event) => {
@@ -61,6 +64,8 @@ class App extends Component {
                 friendName: `${friend.friendName}`,
                 friendBirthday: `${friend.friendBirthday}`,
                 friendFavoriteColor: `${friend.friendFavoriteColor}`,
+                friendFavoriteFood: `${friend.friendFavoriteFood}`,
+                friendCurrentCity: `${friend.friendCurrentCity}`,
             }
             contacts.push(newFriend)
         })
@@ -73,15 +78,18 @@ class App extends Component {
   }
 
   render() {
-    const {friendName, friendBirthday, friendFavoriteColor} = this.state
+    const {friendName, friendBirthday, friendFavoriteColor, friendFavoriteFood, friendCurrentCity} = this.state
     const friendProfiles = []
 
     for (let i = 0; i < this.state.contacts.length; i++) {
         friendProfiles.push(<Friend key = {i} friendProfile={this.state.contacts[i]} />)
     }
     return (
-            <div>
+            <div id = 'maincontainer'>
+                <h1>Friendship Manager</h1>
+                <div id="submitBtns">
                 <form onSubmit ={this.handleSubmit}>
+                    
                     <div>
                         <input type="text" 
                         name="friendName" 
@@ -103,11 +111,33 @@ class App extends Component {
                         placeholder="Favorite Color"
                         onChange={this.changeHandler}/>
                     </div>
+                    <div>
+                        <input type="text" 
+                        name="friendFavoriteFood" 
+                        value={friendFavoriteFood}
+                        placeholder="Favorite Food"
+                        onChange={this.changeHandler}/>
+                    </div>
+                    <div>
+                        <input type="text" 
+                        name="friendCurrentCity" 
+                        value={friendCurrentCity}
+                        placeholder="Current City"
+                        onChange={this.changeHandler}/>
+                    </div>
                     <button type ='submit'>Submit</button>
                 </form>
-                <form onSubmit ={this.handleSeeAllFriends}>
-                    <button type ='submit'>See All Friends</button>
-                </form>
+                </div>
+                <div id = 'seeFriendsBtn'>
+                    <form onSubmit ={this.handleSeeAllFriends}>
+                        <button type ='submit'>See All Friends</button>
+                    </form>
+                </div>
+                <div id = 'deleteFriendsBtn'>
+                    <form onSubmit ={this.handleSeeAllFriends}>
+                        <button type ='submit'>Delete Friend</button>
+                    </form>
+                </div>
                 <div style={styles.container} id="feed">
                     {friendProfiles}
                 </div>
@@ -118,12 +148,14 @@ class App extends Component {
 
 const styles = {
     container: {
-      border: '1px black solid',
+    //   border: '1px black solid',
       width: '50%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '10px',
+    //   padding: '10px',
+      justifyContent: 'center',
+    //   position: 'absolute'
     },
   };
   

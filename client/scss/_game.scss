@@ -1,36 +1,71 @@
 body {
-  background: beige;
+  background: #7395AE;
 }
 
-#board {
-  width: 390px;
-  height: 390px;
-  // border: 5px solid $lightOrange;
-  // background-color: $darkBlue;
-  margin: 20px auto;
-  padding: 0;
-}
+#maincontainer {
+  // background: blueviolet;
+  display: flex;
+  flex-direction: column;
 
-.square {
-  box-sizing: border-box;
-  float: left;
-  // display: inline-block;
-  font-size: 0;
-  line-height: 0;
-  width: 120px;
-  height: 120px;
-  border-radius: 4px;
-  background-color: white;
-  border: 1px solid gainsboro;
-  margin: 5px;
-  font-size: 2em;
-  font-weight: 550;
-  line-height: 100px;
-  text-align: center;
-  cursor: pointer;
-
-  &:hover {
-    background-color: darken(white, 15);
+  h1 {
+    // background-color: #557A95;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
   }
-
+  
+  #feed {
+    background: #557A95;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 125px; 
+    left: 25%;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
 }
+  #submitBtns {
+    background: #557A95;
+    display: flex;
+    flex-Direction: column;
+    align-Items: center;
+    border: 1px solid black;
+    height: 175px;
+    width: 150px;
+    flex: 1;
+    padding: 20px;
+    margin-left: 110px;
+    font-family:'Courier New', Courier, monospace;
+  }
+  #seeFriendsBtn {
+    background: #557A95;
+    display: flex;
+    border: 1px solid black;
+    height: 20px;
+    width: 150px;
+    padding: 20px;
+    justify-content: center;
+    margin-left: 110px;
+    font-family:'Courier New', Courier, monospace;
+  }
+  #deleteFriendsBtn {
+    background:  #557A95;
+    display:inline-flex;
+    border: 1px solid black;
+    height: 20px;
+    width: 150px;
+    padding: 20px;
+    justify-content: center;
+    margin-left: 1400px;
+    position: absolute;
+    top: 125px;
+    font-family:'Courier New', Courier, monospace;
+  }
+}
+
+
