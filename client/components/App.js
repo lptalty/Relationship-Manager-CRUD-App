@@ -24,11 +24,10 @@ class App extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-
    handleSubmit = async (event) => {
     // alert('A name was submitted: ' + this.state.value);
     //change this to have it go to the right schema
-    event.preventDefault();
+    // event.preventDefault();
     console.log(this.state)
     try {
         console.log('attempting to post with axios')
@@ -48,9 +47,38 @@ class App extends Component {
     }
   }
 
+  componentDidMount = async () => {
+
+    console.log('trying to render friends on mount')
+    try {
+        const allFriends = await axios.get('http://localhost:3000/data');
+    
+        console.log('entered into the allFriends await call')
+        this.setState({contacts: []})
+        const {contacts} = this.state
+
+        allFriends.data.map(friend => {
+            let newFriend = {
+                friendName: `${friend.friendName}`,
+                friendBirthday: `${friend.friendBirthday}`,
+                friendFavoriteColor: `${friend.friendFavoriteColor}`,
+                friendFavoriteFood: `${friend.friendFavoriteFood}`,
+                friendCurrentCity: `${friend.friendCurrentCity}`,
+            }
+            contacts.push(newFriend)
+        })
+        
+        this.setState({contacts: contacts})
+        console.log(this.state)
+
+    } catch (error) {
+        console.log(error)
+    }
+  }
   handleSeeAllFriends = async (event) => {
     // alert('A name was submitted: ' + this.state.value);
     //change this to have it go to the right schema
+    console.log('handleSeeAllFriends accessed')
     event.preventDefault();
     try {
         const allFriends = await axios.get('http://localhost:3000/data');
@@ -72,6 +100,7 @@ class App extends Component {
         
         this.setState({contacts: contacts})
         console.log(this.state)
+
     } catch (error) {
         console.log(error)
     }
@@ -89,7 +118,6 @@ class App extends Component {
                 <h1>Friendship Manager</h1>
                 <div id="submitBtns">
                 <form onSubmit ={this.handleSubmit}>
-                    
                     <div>
                         <input type="text" 
                         name="friendName" 
@@ -131,11 +159,6 @@ class App extends Component {
                 <div id = 'seeFriendsBtn'>
                     <form onSubmit ={this.handleSeeAllFriends}>
                         <button type ='submit'>See All Friends</button>
-                    </form>
-                </div>
-                <div id = 'deleteFriendsBtn'>
-                    <form onSubmit ={this.handleSeeAllFriends}>
-                        <button type ='submit'>Delete Friend</button>
                     </form>
                 </div>
                 <div style={styles.container} id="feed">

@@ -31,8 +31,18 @@ charityController.postNewFriend = async (req, res, next) => {
     console.log('there was an error creating the user')
     return next(error)
   }
+};
 
+charityController.deleteFriend = async (req, res, next) => {
   
+  try {
+    console.log('We have entered charity controller delete friend')
+    await models.Charity.deleteOne(req.body)
+    return next()
+  } catch (error) {
+    console.log('there was an error deleting the user')
+    return next(error)
+  }
 };
 
 module.exports = charityController;

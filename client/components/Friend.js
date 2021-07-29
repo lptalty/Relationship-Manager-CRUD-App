@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 // FeedItem should consist of an image (src contained in the data from the AJAX request)
 class Friend extends Component {
@@ -9,6 +10,24 @@ class Friend extends Component {
     
   };
   
+  handleDeleteFriend = async (event) => {
+    // event.preventDefault();
+    try {
+      // console.log(id)
+      console.log('attempting to delete with axios')
+      console.log(this.props.friendProfile)
+
+      await axios.delete('http://localhost:3000/deleteFriend', {
+        data: {
+          friendName: this.props.friendProfile.friendName
+        }
+      })    
+    } catch (error) {
+      console.log(error) 
+    }
+  }
+
+  
 
   render() {
     return (
@@ -18,6 +37,9 @@ class Friend extends Component {
        <div>Favorite Color: {this.props.friendProfile.friendFavoriteColor} </div>
        <div>Favorite Food: {this.props.friendProfile.friendFavoriteFood} </div>
        <div>Current City: {this.props.friendProfile.friendCurrentCity} </div>
+       <form onSubmit ={this.handleDeleteFriend}>
+          <button type ='submit'>Delete Friend</button>
+        </form>      
       </div>
     );
   }
