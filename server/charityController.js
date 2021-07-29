@@ -11,20 +11,16 @@ charityController.getAllUsers = (req, res, next) => {
     // if a database error occurs, call next with the error message passed in
     // for the express global error handler to catch
     if (err) return next(err);
-    // console.log('Finding users...')
-    // console.log(users)
     // store retrieved users into res.locals and move on to next middleware
     res.locals.users =  users;
-    // console.log(res.locals)
     return next();
   });
 };
 
+//saves new friend information to the database
 charityController.postNewFriend = async (req, res, next) => {
-  
   try {
     console.log('We have entered charity controller post new friend')
-    console.log(req.body)
     await models.Charity.create(req.body)
     return next()
   } catch (error) {
@@ -33,8 +29,8 @@ charityController.postNewFriend = async (req, res, next) => {
   }
 };
 
+//deletes user from the database
 charityController.deleteFriend = async (req, res, next) => {
-  
   try {
     console.log('We have entered charity controller delete friend')
     await models.Charity.deleteOne(req.body)
@@ -45,20 +41,22 @@ charityController.deleteFriend = async (req, res, next) => {
   }
 };
 
+//finds a friend or multiple friends based on the category (key) and the search data
 charityController.findFriend = async (req, res, next) => {
-  
   try {
     console.log('We have entered charity controller findFriend')
-    // console.log(req.body)
     const key = 'friend' + req.body.key
     const value = req.body.value
 
     const search = {
       [key]: value
     }
+    
+    //if the user makes a search request without any information, delete row and send empty object
+    if (search['friend'] === ''){
+      delete search['friend']
+    }
 
-    console.log('searching for')
-    console.log(search)
     await models.Charity.find(search, (err, users) =>{
       if(err) return next(err)
       res.locals.users = users;

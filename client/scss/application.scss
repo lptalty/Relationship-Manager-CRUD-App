@@ -1,1 +1,71 @@
-@import '_game';
+body {
+    background: #7395AE;
+  }
+  
+  #maincontainer {
+    // background: blueviolet;
+    display: flex;
+    flex-direction: column;
+  
+    h1 {
+      // background-color: #557A95;
+      height: 75px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-family:'Courier New', Courier, monospace;
+    }
+    
+    #feed {
+      background: #557A95;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 125px; 
+      left: 25%;
+      font-family:'Courier New', Courier, monospace;
+      // font-weight: bold;
+      font-size: larger;
+  }
+    #submitBtns {
+      background: #557A95;
+      display: flex;
+      flex-Direction: column;
+      align-Items: center;
+      border: 1px solid black;
+      height: 175px;
+      width: 150px;
+      flex: 1;
+      padding: 20px;
+      margin-left: 110px;
+      font-family:'Courier New', Courier, monospace;
+    }
+    #seeFriendsBtn {
+      background: #557A95;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid black;
+      height: 80px;
+      width: 150px;
+      padding: 20px;
+      justify-content: center;
+      margin-left: 110px;
+      font-family:'Courier New', Courier, monospace;
+    }
+    #deleteFriendBtn {
+      // background: #BFB9B6;
+      display: flex;
+      padding: 2px;
+      font-family:'Courier New', Courier, monospace;
+      // margin: 15px;
+      justify-content: center;
+      // align-items: center;
+      // text-align: center;
+    }
+  }
+  
+  
+  

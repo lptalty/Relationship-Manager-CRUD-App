@@ -12,6 +12,12 @@ mongoose.connect(mongoURI, {
 
 const Schema = mongoose.Schema;
 
+/*
+I was originally going to do this project by saving and getting different
+charities to render on the page for the user. I ended up refactoring this 
+Schema to store the information of friends because the project took a turn.
+This explains the oddly named schema.  
+ */
 const charitySchema = new Schema({
     friendName: {type: String, required: true, unique: true},
     friendBirthday: {type: String, required: false, unique: false},
@@ -19,10 +25,6 @@ const charitySchema = new Schema({
     friendFavoriteFood: {type: String, required: false},
     friendCurrentCity: {type: String, required: false}
 })
-//_id: {type: mongoose.Types.ObjectId},
-//unique: true
-// _id: {type: mongoose.Types.ObjectId},
-// website_name: {type: String, required: true}
 
 const Charity = mongoose.model('charity', charitySchema);
 

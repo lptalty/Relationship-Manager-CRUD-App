@@ -229,14 +229,11 @@ class App extends Component {
 
 const styles = {
     container: {
-    //   border: '1px black solid',
       width: '50%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-    //   padding: '10px',
       justifyContent: 'center',
-    //   position: 'absolute'
     },
   };
   

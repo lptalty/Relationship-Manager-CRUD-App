@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-// FeedItem should consist of an image (src contained in the data from the AJAX request)
-class Friend extends Component {
 
-  //good for establishing new property
+class Friend extends Component {
   constructor(props) {
     super(props);
-    
   };
   
   handleDeleteFriend = async (event) => {
     // event.preventDefault();
     try {
-      // console.log(id)
       console.log('attempting to delete with axios')
       console.log(this.props.friendProfile)
 
@@ -27,8 +23,6 @@ class Friend extends Component {
     }
   }
 
-  
-
   render() {
     return (
       <div style={styles.container}>
@@ -38,7 +32,7 @@ class Friend extends Component {
        <div>Favorite Food: {this.props.friendProfile.friendFavoriteFood} </div>
        <div>Current City: {this.props.friendProfile.friendCurrentCity} </div>
        <form onSubmit ={this.handleDeleteFriend}>
-          <button type ='submit'>Delete Friend</button>
+          <button type ='submit' id="deleteFriendBtn">Delete</button>
         </form>      
       </div>
     );
@@ -54,7 +48,6 @@ const styles = {
     height: '100%',
     width: '100%',
     flex: 1,
-    padding: '20px'
   },
 };
 
