@@ -45,4 +45,20 @@ charityController.deleteFriend = async (req, res, next) => {
   }
 };
 
+charityController.findFriend = async (req, res, next) => {
+  
+  try {
+    console.log('We have entered charity controller findFriend')
+    console.log(req.body)
+    await models.Charity.find(req.body, (err, users) =>{
+      if(err) return next(err)
+      res.locals.users = users;
+      return next()
+    })
+  } catch (error) {
+    console.log('there was an error deleting the user')
+    return next(error)
+  }
+};
+
 module.exports = charityController;

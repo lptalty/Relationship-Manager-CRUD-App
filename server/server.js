@@ -17,6 +17,11 @@ app.get('/data', charityController.getAllUsers, (req, res) => {
     res.status(200).json(res.locals.users)
   });
 
+app.post('/findFriend', charityController.findFriend, (req, res) => {    
+    console.log('entered into app.get find friend')
+    res.status(200).json(res.locals.users)
+  });
+
 app.post('/newFriend', charityController.postNewFriend, (req, res) => {
     console.log('app.post accessed')
     res.status(200)

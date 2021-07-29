@@ -16,6 +16,7 @@ class App extends Component {
         friendFavoriteColor: '',
         friendFavoriteFood: '',
         friendCurrentCity: '',
+        findFriendName: '',
         contacts: []
     }
   }
@@ -106,8 +107,47 @@ class App extends Component {
     }
   }
 
+  handleSearchFriends = async (event) => {
+    // alert('A name was submitted: ' + this.state.value);
+    //change this to have it go to the right schema
+    console.log('handleSeeAllFriends accessed')
+    event.preventDefault();
+    try {
+        console.log(this.state.findFriendName)
+        const foundFriend = await axios({
+            method: 'post',
+            url: 'http://localhost:3000/findFriend',
+            data: {
+                friendName : this.state.findFriendName
+            }
+        })
+        
+        console.log('found friend equals: ')
+        console.log(foundFriend.data)
+        this.setState({contacts: []})
+        const {contacts} = this.state
+
+        foundFriend.data.map(friend => {
+            let newFriend = {
+                friendName: `${friend.friendName}`,
+                friendBirthday: `${friend.friendBirthday}`,
+                friendFavoriteColor: `${friend.friendFavoriteColor}`,
+                friendFavoriteFood: `${friend.friendFavoriteFood}`,
+                friendCurrentCity: `${friend.friendCurrentCity}`,
+            }
+            contacts.push(newFriend)
+        })
+        
+        this.setState({contacts: contacts})
+        console.log(this.state)
+
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
   render() {
-    const {friendName, friendBirthday, friendFavoriteColor, friendFavoriteFood, friendCurrentCity} = this.state
+    const {friendName, friendBirthday, friendFavoriteColor, friendFavoriteFood, friendCurrentCity, findFriendName} = this.state
     const friendProfiles = []
 
     for (let i = 0; i < this.state.contacts.length; i++) {
@@ -157,9 +197,17 @@ class App extends Component {
                 </form>
                 </div>
                 <div id = 'seeFriendsBtn'>
-                    <form onSubmit ={this.handleSeeAllFriends}>
-                        <button type ='submit'>See All Friends</button>
+                    <form onSubmit ={this.handleSearchFriends}>
+                        <button type ='submit'>Search</button>
                     </form>
+                    <div>
+                        <input type="text" 
+                        name="findFriendName" 
+                        value={findFriendName}
+                        placeholder="By Name"
+                        onChange={this.changeHandler}/>
+                    </div>
+                
                 </div>
                 <div style={styles.container} id="feed">
                     {friendProfiles}
